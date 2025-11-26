@@ -1,0 +1,30 @@
+{
+  "COMP_1": [
+    {
+      "feature": "customer_support",
+      "mention_count": 4,
+      "share_of_complaints_%": 57.1,
+      "impact_score": 2.284
+    },
+    {
+      "feature": "price_value",
+      "mention_count": 2,
+      "share_of_complaints_%": 28.6,
+      "impact_score": 0.572
+    },
+    {
+      "feature": "performance_speed",
+      "mention_count": 1,
+      "share_of_complaints_%": 14.3,
+      "impact_score": 0.143
+    }
+  ],
+  "MY_PRODUCT": [
+    {
+      "feature": "price_value",
+      "mention_count": 1,
+      "share_of_complaints_%": 100.0,
+      "impact_score": 1.0
+    }
+  ]
+}
