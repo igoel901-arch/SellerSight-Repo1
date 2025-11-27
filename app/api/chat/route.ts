@@ -1,29 +1,32 @@
-import { NextRequest, NextResponse } from "next/server";
+// app/api/chat/route.ts
+import { NextRequest } from "next/server";
 import { streamText } from "ai";
 import { openai } from "@ai-sdk/openai";
-// … your RAG imports …
 
+export const runtime = "edge";
+
+// ✅ Read and validate the API key once, and keep it as a plain string
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-
 if (!OPENAI_API_KEY) {
-  throw new Error("Missing OPENAI_API_KEY in environment variables");
+  throw new Error("Missing env var OPENAI_API_KEY");
 }
 
 export async function POST(req: NextRequest) {
   const { messages } = await req.json();
 
   const result = await streamText({
+    // ✅ Pass apiKey directly into the model factory (no providerOptions)
     model: openai("gpt-4.1-mini", {
       apiKey: OPENAI_API_KEY,
     }),
+
     messages,
-    // providerOptions is optional now – remove if it caused the JSONValue error
-    // providerOptions: {
-    //   openai: {
-    //     apiKey: OPENAI_API_KEY,
-    //   },
-    // },
-    // include your RAG / tools logic here
+
+    // ⬇️ Put back your own config here if you had it before
+    // system: "You are SellerSight, an AI that analyzes Amazon reviews for sellers...",
+    // maxTokens: 1024,
+    // tools: { ... },
+    // experimental: { parallelToolCalls: false }, // if you need this behaviour
   });
 
   return result.toDataStreamResponse();
