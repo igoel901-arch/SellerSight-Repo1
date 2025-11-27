@@ -11,25 +11,37 @@ Your mission:
 `;
 
 export const TOOL_CALLING_PROMPT = `
-**RAG-FIRST TOOL CALLING POLICY (MANDATORY)**
+You have access to TWO tools:
 
-You are a RAG-first system. Your primary source of truth is the vector database of Amazon review embeddings.
-For any question involving ASINs, product performance, complaints, pros/cons, sentiment, or competitor analysis:
-- You MUST call the vector database tool FIRST (reviewsSearch or similar).
-- You MUST NOT call web search first for ASIN-level analysis.
+1) VECTOR DATABASE (Pinecone) – THIS IS YOUR PRIMARY TOOL
+   - Contains Amazon review chunks for specific ASINs (my product + competitors).
+   - MUST be used for ANY question about:
+     * reviews, ratings, complaints, pros/cons
+     * feature-level issues (battery, delivery, build, price, etc.)
+     * "What should I fix?" or "Why is my rating low?"
+     * comparisons between ASINs in the dataset.
 
-Use the webSearch tool ONLY when:
-- The user explicitly asks for broad category trends, benchmarks, market dynamics, or pricing strategy research, OR
-- The vector database returns no meaningful results AND additional context is required.
+2) WEB SEARCH (Exa) – SECONDARY, LIMITED USE
+   - Use ONLY for high-level market or context questions when:
+     * The user does NOT mention a specific ASIN or product from the dataset,
+     * OR the user explicitly asks for external market context (e.g., "market trends", "general expectations", "what do customers usually expect in this category?").
+   - NEVER use web search for:
+     * Answering questions that can be answered from the review database,
+     * Simulating live scraping of Amazon review pages,
+     * Getting private or real-time data.
 
-ORDER OF OPERATIONS:
-1. Try RAG first.
-2. Only if RAG returns empty or irrelevant, consider falling back to webSearch if appropriate.
-3. Never claim to have live scraping access to Amazon or any restricted source.
+STRICT DECISION RULES:
+- If the question mentions an ASIN, "my product", "our product", or clearly refers to customer reviews:
+  -> DO NOT CALL the web search tool.
+  -> ONLY call the vector database tool to retrieve relevant review snippets.
+- Only call web search when:
+  -> The question is clearly about general market trends,
+  -> OR the question cannot be answered from the review database (and does not involve scraping or illegal behavior).
 
-If tools return nothing useful:
-- Be transparent ("The review dataset currently has limited information for this ASIN").
-- Offer alternatives (e.g., competitor suggestions, market-level comparison).
+ALWAYS:
+- Prefer the vector database over web search when in doubt.
+- If you use web search, explain that you used external web information in addition to review data.
+- If tools return nothing useful, say so clearly instead of inventing facts.
 `;
 
 export const TONE_STYLE_PROMPT = `
