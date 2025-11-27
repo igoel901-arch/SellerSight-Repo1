@@ -1,3 +1,32 @@
+// config.ts
+
+export const AI_NAME = "SellerSight";
+
+export const OWNER_NAME = "Manushi Goel & Ishita Goel";
+
+export const CLEAR_CHAT_TEXT = "New analysis";
+
+// This feeds the big first assistant bubble via makeWelcomeMessage()
+export const WELCOME_MESSAGE = `
+Hi, I’m SellerSight — your Amazon review intelligence co-pilot for:
+
+• Amazon sellers and brand owners  
+• D2C founders planning a new launch  
+• Category managers optimising live listings  
+
+Here’s what I can do for you:
+1) Summarise review sentiment and key themes  
+2) Highlight hidden feature gaps and opportunities  
+3) Compare your product against competitor ASINs  
+4) Turn insights into clear, actionable recommendations
+
+To get the best results, start by telling me:
+• Your product’s ASIN (or a few ASINs)    
+• Your goal: launch prep, optimisation, or competitor analysis  
+`.trim();
+
+
+/**
 import { openai } from "@ai-sdk/openai";
 import { fireworks } from "@ai-sdk/fireworks";
 import { wrapLanguageModel, extractReasoningMiddleware } from "ai";
@@ -116,6 +145,7 @@ Your message violates safety guidelines, so I can’t assist with that.
 // ---------------------------------------------------------------------------
 export const PINECONE_TOP_K = 8;
 export const PINECONE_INDEX_NAME = "sellersight-reviews";  // MUST MATCH THE ACTUAL INDEX
+*/
 
 
 
