@@ -47,6 +47,10 @@ export const MODERATION_DENIAL_MESSAGE_ILLEGAL = `
 I analyze Amazon product reviews and business questions only. I can’t help with illegal or policy-violating requests.
 `;
 
+export const MODERATION_DENIAL_MESSAGE_SEXUAL = `
+I can't discuss explicit sexual content.
+`;
+
 export const MODERATION_DENIAL_MESSAGE_SEXUAL_MINORS = `
 I can't discuss any content involving minors in a sexual context.
 `;
