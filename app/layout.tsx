@@ -12,17 +12,63 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// ✅ This controls your tab title + SEO + favicon
+export const metadata: Metadata = {
+  title: {
+    default: "SellerSight",
+    template: "%s · SellerSight",
+  },
+  description:
+    "AI-powered Amazon review intelligence assistant for data-backed insights, sentiment analysis, and competitor benchmarking.",
+  keywords: [
+    "Amazon reviews",
+    "Product intelligence",
+    "Sentiment analysis",
+    "Ecommerce analytics",
+    "AI for Amazon sellers",
+  ],
+  icons: {
+    // favicon in /public
+    icon: "/favicon.ico",
+    // logo used as shortcut / apple icon
+    shortcut: "/sellersight-logo.png",
+    apple: "/sellersight-logo.png",
+  },
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={${inter.variable} ${geistMono.variable} antialiased}>
+        {children}
+      </body>
+    </html>
+  );
+}
+/**import type { Metadata } from "next";
+import { Inter, Geist_Mono } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 // 🔥 This controls your tab title + SEO + favicon
 export const metadata: Metadata = {
   title: {
     default: "SellerSight",
     template: "%s · SellerSight",
   },
-  title: "SellerSight",
-  description: "Amazon review intelligence assistant",
-  icons: {
-    icon: "/favicon.ico", 
-  },
   description:
     "AI-powered review insights, sentiment analysis, and competitor intelligence for Amazon sellers.",
   keywords: [
@@ -52,3 +98,4 @@ export default function RootLayout({
     </html>
   );
 }
+*/
