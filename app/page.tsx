@@ -80,14 +80,14 @@ export default function Chat() {
   }
 
   return (
-    // 👉 full-screen, aligned to top, nice beige bg
-    <div className="flex h-screen justify-center bg-[#FAF7F2] text-[#0F1111] font-sans">
-      {/* AWS-style panel, but wider for desktop */}
+    // full-screen page, centered horizontally, beige bg
+    <div className="flex min-h-screen justify-center bg-[#FAF7F2] text-[#0F1111] font-sans">
       <main className="w-full flex justify-center items-start pt-8 px-4">
-        <div className="w-full max-w-4xl rounded-3xl shadow-xl overflow-hidden bg-white border border-gray-200">
-          {/* Gradient header like AWS widget */}
+        {/* FULL-WIDTH DESKTOP CARD (not tiny window) */}
+        <div className="w-full max-w-5xl flex flex-col rounded-3xl shadow-xl bg-white border border-gray-200 overflow-hidden">
+          {/* Top gradient header (no input here now) */}
           <div className="bg-gradient-to-r from-[#4C6FFF] to-[#8A2EFF] px-6 py-4 text-white">
-            <div className="flex items-start justify-between gap-2">
+            <div className="flex items-center justify-between gap-2">
               <div className="flex items-center gap-2">
                 <Avatar className="h-8 w-8 border border-white/40">
                   <AvatarImage src="/sellersight-logo.png" />
@@ -114,70 +114,16 @@ export default function Chat() {
                 <Plus className="h-3 w-3" />
               </Button>
             </div>
-
-            {/* Input bar INSIDE header, like AWS screenshot */}
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="mt-4"
-              id="chat-form"
-            >
-              <FieldGroup>
-                <Controller
-                  name="message"
-                  control={form.control}
-                  render={({ field, fieldState }) => (
-                    <Field data-invalid={fieldState.invalid}>
-                      <FieldLabel className="sr-only">Message</FieldLabel>
-                      <div className="relative">
-                        <Input
-                          {...field}
-                          placeholder="Ask a question about your ASIN or category…"
-                          className="h-10 w-full rounded-full border border-white/60 bg-white text-xs text-[#0F1111] pl-4 pr-10 shadow-sm focus:outline-none focus:ring-2 focus:ring-white"
-                          disabled={status === "streaming"}
-                          autoComplete="off"
-                          onKeyDown={(e) => {
-                            if (e.key === "Enter" && !e.shiftKey) {
-                              e.preventDefault();
-                              form.handleSubmit(onSubmit)();
-                            }
-                          }}
-                        />
-                        {(status === "ready" || status === "error") && (
-                          <Button
-                            type="submit"
-                            disabled={!field.value.trim()}
-                            size="icon"
-                            className="absolute right-1 top-1 h-8 w-8 rounded-full bg-[#232F3E] hover:bg-[#111827] text-white shadow"
-                          >
-                            <ArrowUp className="h-4 w-4" />
-                          </Button>
-                        )}
-                        {(status === "streaming" || status === "submitted") && (
-                          <Button
-                            type="button"
-                            size="icon"
-                            onClick={() => stop()}
-                            className="absolute right-1 top-1 h-8 w-8 rounded-full bg-white/80 text-[#0F1111]"
-                          >
-                            <Square className="h-4 w-4" />
-                          </Button>
-                        )}
-                      </div>
-                    </Field>
-                  )}
-                />
-              </FieldGroup>
-            </form>
           </div>
 
-          {/* Body: messages + subtle loader + footer */}
-          <div className="flex flex-col bg-white">
-            {/* Suggested quick-start buttons (AWS-like) */}
+          {/* Middle: quick-start + messages, scrollable */}
+          <div className="flex-1 flex flex-col bg-white">
+            {/* Quick-start buttons */}
             <div className="px-6 pt-4 pb-2 space-y-2 text-xs text-[#374151] border-b border-gray-100">
               <p className="font-medium text-[11px] uppercase tracking-wide text-[#6B7280]">
                 Want help getting started?
               </p>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-wrap gap-2 md:flex-nowrap md:flex-col">
                 <QuickStartButton
                   label="Analyze my product's reviews"
                   prompt="Help me analyze reviews for my Amazon product and show top complaints and strengths."
@@ -196,8 +142,8 @@ export default function Chat() {
               </div>
             </div>
 
-            {/* Messages area */}
-            <div className="max-h-[540px] overflow-y-auto px-6 py-4">
+            {/* Messages area — takes remaining height, scrolls */}
+            <div className="flex-1 overflow-y-auto px-6 py-4">
               {isClient ? (
                 <>
                   <MessageWall
@@ -219,9 +165,67 @@ export default function Chat() {
               )}
             </div>
 
-            {/* Tiny footer like AWS widget */}
+            {/* Bottom: INPUT BAR AT THE END */}
+            <div className="border-t border-gray-200 px-6 py-3 bg-white">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="w-full"
+                id="chat-form"
+              >
+                <FieldGroup>
+                  <Controller
+                    name="message"
+                    control={form.control}
+                    render={({ field, fieldState }) => (
+                      <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel className="sr-only">Message</FieldLabel>
+                        <div className="relative flex items-center">
+                          <Input
+                            {...field}
+                            placeholder="Ask a question about your ASIN, reviews, or competitors…"
+                            className="h-12 w-full rounded-full border border-gray-300 bg-white text-sm text-[#0F1111] pl-4 pr-12 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4C6FFF]"
+                            disabled={status === "streaming"}
+                            autoComplete="off"
+                            onKeyDown={(e) => {
+                              if (e.key === "Enter" && !e.shiftKey) {
+                                e.preventDefault();
+                                form.handleSubmit(onSubmit)();
+                              }
+                            }}
+                          />
+                          {(status === "ready" || status === "error") && (
+                            <Button
+                              type="submit"
+                              disabled={!field.value.trim()}
+                              size="icon"
+                              className="absolute right-1 h-9 w-9 rounded-full bg-[#232F3E] hover:bg-[#111827] text-white shadow"
+                            >
+                              <ArrowUp className="h-4 w-4" />
+                            </Button>
+                          )}
+                          {(status === "streaming" || status === "submitted") && (
+                            <Button
+                              type="button"
+                              size="icon"
+                              onClick={() => stop()}
+                              className="absolute right-1 h-9 w-9 rounded-full bg-gray-200 text-[#0F1111]"
+                            >
+                              <Square className="h-4 w-4" />
+                            </Button>
+                          )}
+                        </div>
+                      </Field>
+                    )}
+                  />
+                </FieldGroup>
+              </form>
+            </div>
+
+            {/* Footer inside card */}
             <div className="border-t border-gray-100 px-6 py-3 text-[11px] text-gray-500 flex justify-between items-center">
-              <span>© {new Date().getFullYear()} {OWNER_NAME}</span>
+              <span>
+                © {new Date().getFullYear()} {OWNER_NAME}
+              </span>
               <span className="space-x-1">
                 <Link href="/terms" className="underline">
                   Terms
