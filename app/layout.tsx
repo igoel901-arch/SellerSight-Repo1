@@ -12,9 +12,26 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
-  title: "SellerSight — Amazon Review Intelligence",
-  description: "AI-powered review insights and competitor intelligence for Amazon sellers.",
+// 🔥 Updated metadata with dynamic title + icons
+export const metadata: Metadata = {
+  title: {
+    default: "SellerSight — Amazon Review Intelligence",
+    template: "%s · SellerSight",
+  },
+  description:
+    "AI-powered review insights, sentiment analysis, and competitor intelligence for Amazon sellers.",
+  keywords: [
+    "Amazon reviews",
+    "Product intelligence",
+    "Sentiment analysis",
+    "Ecommerce analytics",
+    "AI for Amazon sellers",
+  ],
+  icons: {
+    icon: "/sellersight-logo.png",
+    shortcut: "/sellersight-logo.png",
+    apple: "/sellersight-logo.png",
+  },
 };
 
 export default function RootLayout({
@@ -24,9 +41,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         {children}
       </body>
     </html>
