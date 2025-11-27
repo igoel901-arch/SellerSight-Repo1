@@ -32,19 +32,19 @@ export const DATE_AND_TIME = getDateAndTime();
 export const AI_NAME = "SellerSight";
 export const OWNER_NAME = "Manushi Goel and Ishita Goel";
 
-export const WELCOME_MESSAGE = `
-Hi, I’m SellerSight 👋
-Your Amazon review intelligence assistant for **sellers & D2C founders**.
+export const WELCOME_MESSAGE = 
+"Hi, I'm SellerSight 👋\n" +
+"Your Amazon review intelligence assistant.\n\n" +
 
-I help you:
-• Spot top customer complaints & delights  
-• Identify feature gaps and improvement opportunities  
-• Compare products using review insights  
-• Get clear, actionable recommendations
+"I help you:\n" +
+"• Spot top customer complaints & delights\n" +
+"• Identify feature gaps and improvement opportunities\n" +
+"• Compare products using review insights\n" +
+"• Get clear, actionable recommendations\n\n" +
 
-To begin, share:
-• ASIN (or competitor ASINs) 
-• Your goal (launch, optimise, compare)
+"To begin, share:\n" +
+"• ASIN (or competitor ASINs)\n" +
+"• Your goal\n\n" +
 `;
 
 export const CLEAR_CHAT_TEXT = "New Analysis";
