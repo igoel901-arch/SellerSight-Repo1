@@ -1,32 +1,3 @@
-// config.ts
-
-export const AI_NAME = "SellerSight";
-
-export const OWNER_NAME = "Manushi Goel & Ishita Goel";
-
-export const CLEAR_CHAT_TEXT = "New analysis";
-
-// This feeds the big first assistant bubble via makeWelcomeMessage()
-export const WELCOME_MESSAGE = `
-Hi, I’m SellerSight — your Amazon review intelligence co-pilot for:
-
-• Amazon sellers and brand owners  
-• D2C founders planning a new launch  
-• Category managers optimising live listings  
-
-Here’s what I can do for you:
-1) Summarise review sentiment and key themes  
-2) Highlight hidden feature gaps and opportunities  
-3) Compare your product against competitor ASINs  
-4) Turn insights into clear, actionable recommendations
-
-To get the best results, start by telling me:
-• Your product’s ASIN (or a few ASINs)    
-• Your goal: launch prep, optimisation, or competitor analysis  
-`.trim();
-
-
-/**
 import { openai } from "@ai-sdk/openai";
 import { fireworks } from "@ai-sdk/fireworks";
 import { wrapLanguageModel, extractReasoningMiddleware } from "ai";
@@ -59,12 +30,21 @@ export const DATE_AND_TIME = getDateAndTime();
 // Branding
 // ---------------------------------------------------------------------------
 export const AI_NAME = "SellerSight";
-export const OWNER_NAME = "Manushi and Ishita (BITSoM MBA Co’26)";
+export const OWNER_NAME = "Manushi Goel and Ishita Goel";
 
 export const WELCOME_MESSAGE = `
-Welcome to SellerSight ⚡
-An advanced AI system engineered to analyze real customer feedback, uncover hidden performance drivers, and forecast the outcomes of inaction.
-I evaluate sentiment signals, competitive positioning, issue severity, and trajectory shifts to reveal the most decisive improvement opportunities.
+Hi, I’m SellerSight 👋
+Your Amazon review intelligence assistant for **sellers & D2C founders**.
+
+I help you:
+• Spot top customer complaints & delights  
+• Identify feature gaps and improvement opportunities  
+• Compare products using review insights  
+• Get clear, actionable recommendations
+
+To begin, share:
+• ASIN (or competitor ASINs) 
+• Your goal (launch, optimise, compare)
 `;
 
 export const CLEAR_CHAT_TEXT = "New Analysis";
@@ -145,7 +125,7 @@ Your message violates safety guidelines, so I can’t assist with that.
 // ---------------------------------------------------------------------------
 export const PINECONE_TOP_K = 8;
 export const PINECONE_INDEX_NAME = "sellersight-reviews";  // MUST MATCH THE ACTUAL INDEX
-*/
+
 
 
 
