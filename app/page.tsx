@@ -9,32 +9,21 @@ import { MessageWall } from "@/components/messages/message-wall";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
-type Sender = "user" | "assistant";
-
-interface ChatMessage {
-  id: string;
-  role: Sender;
-  content: string;
-}
-
 export default function HomePage() {
-  const {
-    messages,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    error,
-    reload,
-    stop,
-  } = useChat({
+  // 👉 New v5-style useChat: no `input` or `handleInputChange` here
+  const { messages, sendMessage, status, error, stop, regenerate } = useChat({
     api: "/api/chat",
   });
 
+  // 👉 Local input state now managed by us
+  const [input, setInput] = useState("");
   const [showTerms, setShowTerms] = useState(false);
+
   const bottomRef = useRef<HTMLDivElement | null>(null);
 
-  // Auto-scroll to bottom when a new message appears
+  const isLoading = status === "streaming" || status === "submitted";
+
+  // Auto-scroll when new messages come in
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
@@ -42,20 +31,21 @@ export default function HomePage() {
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    handleSubmit(e);
+
+    // 👉 New v5 way to send a message
+    sendMessage({ text: input });
+    setInput("");
   };
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-950 to-slate-900 text-slate-50">
       <div className="mx-auto flex max-w-6xl flex-col gap-6 px-4 pb-10 pt-6 md:px-6">
-        {/* Top bar with logo + name */}
         <Header />
 
         <div className="grid gap-6 md:grid-cols-[1.1fr,1.6fr]">
-          {/* Left column: product pitch / identity */}
+          {/* LEFT: identity / pitch */}
           <section className="rounded-3xl border border-slate-800 bg-slate-900/50 p-6 shadow-xl backdrop-blur">
             <div className="flex items-center gap-3">
-              {/* If you have an <Image> logo component, replace with that */}
               <div className="flex h-11 w-11 items-center justify-center rounded-full bg-slate-800">
                 <span className="text-lg font-semibold tracking-tight">SS</span>
               </div>
@@ -91,15 +81,15 @@ export default function HomePage() {
                   Best results tip:
                 </p>
                 <p>
-                  Start with your product’s ASIN + country marketplace
-                  (e.g. <span className="font-mono">B09XYZ1234, Amazon US</span>)
-                  and your goal (launch, optimisation, or competitor analysis).
+                  Start with your product’s ASIN + marketplace (e.g.{" "}
+                  <span className="font-mono">B09XYZ1234, Amazon US</span>) and
+                  your goal (launch, optimisation, or competitor analysis).
                 </p>
               </div>
             </div>
           </section>
 
-          {/* Right column: chat */}
+          {/* RIGHT: chat */}
           <section className="flex h-[70vh] flex-col rounded-3xl border border-slate-800 bg-slate-900/60 shadow-xl backdrop-blur">
             <header className="flex items-center justify-between border-b border-slate-800 px-4 py-3">
               <div>
@@ -113,7 +103,7 @@ export default function HomePage() {
               </div>
               <div className="flex items-center gap-2 text-[10px] text-slate-400">
                 <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                <span>Online</span>
+                <span>{isLoading ? "Analyzing…" : "Online"}</span>
               </div>
             </header>
 
@@ -122,29 +112,31 @@ export default function HomePage() {
               <MessageWall messages={messages as any} />
 
               {error && (
-                <div className="rounded-xl border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
+                <div className="mt-2 rounded-xl border border-red-500/50 bg-red-500/10 px-3 py-2 text-xs text-red-100">
                   Something went wrong.{" "}
-                  <button
-                    type="button"
-                    onClick={() => reload()}
-                    className="underline underline-offset-2"
-                  >
-                    Try again
-                  </button>
+                  {regenerate && (
+                    <button
+                      type="button"
+                      onClick={() => regenerate()}
+                      className="underline underline-offset-2"
+                    >
+                      Try again
+                    </button>
+                  )}
                 </div>
               )}
 
               <div ref={bottomRef} />
             </div>
 
-            {/* Input area */}
+            {/* Input */}
             <form
               onSubmit={onSubmit}
               className="flex items-end gap-2 border-t border-slate-800 bg-slate-900/80 px-3 py-3"
             >
               <Input
                 value={input}
-                onChange={handleInputChange}
+                onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask SellerSight about your ASIN’s reviews…"
                 className="flex-1 border-slate-700 bg-slate-900 text-sm placeholder:text-slate-500"
               />
@@ -173,30 +165,31 @@ export default function HomePage() {
         {/* Terms & Conditions */}
         <section className="mx-auto mt-2 w-full max-w-6xl">
           <div className="rounded-3xl border border-slate-800 bg-slate-900/80 p-4 text-xs text-slate-300">
-            <div className="flex items-center justify-between gap-3">
-              <p>
-                By using SellerSight, you agree to the{" "}
-                <button
-                  type="button"
-                  onClick={() => setShowTerms((v) => !v)}
-                  className="font-semibold text-amber-300 underline underline-offset-2"
-                >
-                  Terms &amp; Conditions
-                </button>
-                .
-              </p>
-            </div>
+            <p>
+              By using SellerSight, you agree to the{" "}
+              <button
+                type="button"
+                onClick={() => setShowTerms((v) => !v)}
+                className="font-semibold text-amber-300 underline underline-offset-2"
+              >
+                Terms &amp; Conditions
+              </button>
+              .
+            </p>
 
             {showTerms && (
               <div className="mt-3 space-y-2 text-[11px] leading-relaxed text-slate-300">
-                <p className="font-semibold text-slate-100">Terms &amp; Conditions</p>
+                <p className="font-semibold text-slate-100">
+                  Terms &amp; Conditions
+                </p>
                 <ul className="list-disc space-y-1 pl-4">
                   <li>
                     SellerSight is a student project built for educational
-                    purposes as part of the BITS School of Management AI
-                    capstone. It is <span className="font-semibold">
-                    not affiliated with or endorsed by Amazon
-                    </span>.
+                    purposes as part of the BITSoM AI capstone. It is{" "}
+                    <span className="font-semibold">
+                      not affiliated with or endorsed by Amazon
+                    </span>
+                    .
                   </li>
                   <li>
                     Insights are generated by AI from publicly available review
@@ -223,7 +216,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Footer */}
         <footer className="mt-2 flex justify-center text-[11px] text-slate-500">
           <p>
             © 2025 Manushi and Ishita (BITSoM MBA Co’26) — Built with SellerSight
