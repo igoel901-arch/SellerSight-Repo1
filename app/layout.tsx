@@ -18,6 +18,11 @@ export const metadata: Metadata = {
     default: "SellerSight",
     template: "%s · SellerSight",
   },
+  title: "SellerSight",
+  description: "Amazon review intelligence assistant",
+  icons: {
+    icon: "/favicon.ico", 
+  },
   description:
     "AI-powered review insights, sentiment analysis, and competitor intelligence for Amazon sellers.",
   keywords: [
