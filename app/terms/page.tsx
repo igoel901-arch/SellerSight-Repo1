@@ -1,3 +1,109 @@
+export default function TermsPage() {
+  return (
+    <main className="min-h-screen bg-[#FAF7F2] text-[#0F1111]">
+      <div className="mx-auto max-w-3xl px-4 py-10">
+        <h1 className="text-2xl font-semibold tracking-tight mb-2">
+          SellerSight – Terms &amp; Use Guidelines
+        </h1>
+        <p className="text-sm text-gray-600 mb-6">
+          Last updated: November 2025
+        </p>
+
+        <div className="space-y-5 text-sm leading-relaxed text-gray-800">
+          <section>
+            <h2 className="font-semibold mb-1">1. What SellerSight Is</h2>
+            <p>
+              SellerSight is a student-built prototype that analyzes Amazon
+              product reviews and provides high-level insights for learning and
+              experimentation. It is designed for Amazon sellers, brand owners,
+              and D2C founders who want a faster way to understand customer
+              feedback.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">2. No Affiliation with Amazon</h2>
+            <p>
+              SellerSight is <span className="font-semibold">not</span> affiliated with,
+              endorsed by, or sponsored by Amazon or any other marketplace. Any
+              mention of “Amazon”, “ASIN”, or related trademarks is solely for
+              descriptive purposes.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">3. Data &amp; Limitations</h2>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>
+                Insights are generated from a limited dataset of historical
+                product reviews and may be incomplete or out of date.
+              </li>
+              <li>
+                Outputs are statistical and qualitative, not exact facts.
+              </li>
+              <li>
+                SellerSight may occasionally be inaccurate, inconsistent, or
+                miss important edge cases.
+              </li>
+            </ul>
+            <p className="mt-2">
+              You should always validate important conclusions using your own
+              data, domain expertise, and professional judgement.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">4. Appropriate Use</h2>
+            <p className="mb-1">
+              By using SellerSight, you agree that you will:
+            </p>
+            <ul className="list-disc pl-5 space-y-1">
+              <li>Use it only for lawful, ethical business purposes.</li>
+              <li>
+                Not attempt to use it for scraping, bypassing platform policies,
+                or automating review manipulation.
+              </li>
+              <li>
+                Not treat its outputs as financial, legal, or tax advice.
+              </li>
+            </ul>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">5. No Confidential or Personal Data</h2>
+            <p>
+              Please do <span className="font-semibold">not</span> enter any
+              confidential information, personal data (PII), or proprietary
+              business secrets into the chat. Any data you choose to share is
+              provided at your own risk.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">6. No Guarantees</h2>
+            <p>
+              SellerSight is provided “as is”, without any guarantees of
+              accuracy, completeness, uptime, or business impact. The creators
+              are not responsible for decisions made based on its outputs.
+            </p>
+          </section>
+
+          <section>
+            <h2 className="font-semibold mb-1">7. Academic Context</h2>
+            <p>
+              This project was created as part of an academic capstone at BITS
+              School of Management (BITSoM). Conversations with the assistant
+              may be logged and reviewed for debugging, model improvement, and
+              academic evaluation.
+            </p>
+          </section>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+/**
 import { ArrowLeftIcon } from "lucide-react";
 import Link from "next/link";
 import { OWNER_NAME } from "@/config";
@@ -205,3 +311,4 @@ export default function Terms() {
         </div>
     );
 }
+*/
