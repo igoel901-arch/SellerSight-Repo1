@@ -14,7 +14,12 @@ import { MessageWall } from "@/components/messages/message-wall";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { UIMessage } from "ai";
 import { useEffect, useState, useRef } from "react";
-import { AI_NAME, CLEAR_CHAT_TEXT, OWNER_NAME, WELCOME_MESSAGE } from "@/config";
+import {
+  AI_NAME,
+  CLEAR_CHAT_TEXT,
+  OWNER_NAME,
+  WELCOME_MESSAGE,
+} from "@/config";
 import Link from "next/link";
 
 // ===== Schema =====
@@ -27,7 +32,7 @@ const formSchema = z.object({
 
 // 🔹 Helper to build the welcome message
 const makeWelcomeMessage = (): UIMessage => ({
-  id: welcome-${Date.now()},
+  id: `welcome-${Date.now()}`,
   role: "assistant",
   parts: [
     {
@@ -81,7 +86,7 @@ export default function Chat() {
 
   return (
     <div className="flex h-screen flex-col bg-[#FAF7F2] text-[#0F1111] font-sans">
-      {/* Top gradient header (full width, like AWS) */}
+      {/* Top gradient header */}
       <header className="flex-none bg-gradient-to-r from-[#4C6FFF] to-[#8A2EFF] px-6 py-4 text-white shadow-sm">
         <div className="flex items-start justify-between gap-3">
           <div className="flex items-center gap-2">
@@ -110,9 +115,9 @@ export default function Chat() {
         </div>
       </header>
 
-      {/* Middle: quick-start + messages, scrollable */}
+      {/* Middle: quick-start + messages */}
       <main className="flex-1 overflow-y-auto px-6 pt-3 pb-4">
-        {/* Quick-start buttons (like AWS options) */}
+        {/* Quick-start buttons */}
         <section className="mb-4 space-y-2 text-xs text-[#374151]">
           <p className="font-medium text-[11px] uppercase tracking-wide text-[#6B7280]">
             Want help getting started?
@@ -162,7 +167,7 @@ export default function Chat() {
         </section>
       </main>
 
-      {/* Bottom input bar (fixed at bottom, full width) */}
+      {/* Bottom input bar */}
       <footer className="flex-none border-t border-gray-200 bg-white/95 backdrop-blur px-6 pt-3 pb-2">
         <div className="mx-auto w-full max-w-3xl">
           <form id="chat-form" onSubmit={form.handleSubmit(onSubmit)}>
@@ -222,7 +227,9 @@ export default function Chat() {
         </div>
 
         <div className="mt-2 flex items-center justify-between text-[11px] text-gray-500">
-          <span>© {new Date().getFullYear()} {OWNER_NAME}</span>
+          <span>
+            © {new Date().getFullYear()} {OWNER_NAME}
+          </span>
           <span className="space-x-1">
             <Link href="/terms" className="underline">
               Terms
@@ -258,6 +265,7 @@ function QuickStartButton({
     </button>
   );
 }
+
 
 
 
