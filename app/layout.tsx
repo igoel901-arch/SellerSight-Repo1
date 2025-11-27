@@ -12,7 +12,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// ✅ This controls your tab title + SEO + favicon
 export const metadata: Metadata = {
   title: {
     default: "SellerSight",
@@ -28,9 +27,7 @@ export const metadata: Metadata = {
     "AI for Amazon sellers",
   ],
   icons: {
-    // favicon in /public
     icon: "/favicon.ico",
-    // logo used as shortcut / apple icon
     shortcut: "/sellersight-logo.png",
     apple: "/sellersight-logo.png",
   },
@@ -49,6 +46,7 @@ export default function RootLayout({
     </html>
   );
 }
+
 /**import type { Metadata } from "next";
 import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
