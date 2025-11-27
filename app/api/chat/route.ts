@@ -1,37 +1,3 @@
-// app/api/chat/route.ts
-import { NextRequest } from "next/server";
-import { streamText } from "ai";
-import { openai } from "@ai-sdk/openai";
-
-export const runtime = "edge";
-
-// ✅ Read and validate the API key once, and keep it as a plain string
-const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-if (!OPENAI_API_KEY) {
-  throw new Error("Missing env var OPENAI_API_KEY");
-}
-
-export async function POST(req: NextRequest) {
-  const { messages } = await req.json();
-
-  const result = await streamText({
-    // ✅ Pass apiKey directly into the model factory (no providerOptions)
-    model: openai("gpt-4.1-mini", {
-      apiKey: OPENAI_API_KEY,
-    }),
-
-    messages,
-
-    // ⬇️ Put back your own config here if you had it before
-    // system: "You are SellerSight, an AI that analyzes Amazon reviews for sellers...",
-    // maxTokens: 1024,
-    // tools: { ... },
-    // experimental: { parallelToolCalls: false }, // if you need this behaviour
-  });
-
-  return result.toDataStreamResponse();
-}
-/**
 // app/api/chat/route.ts  (or frontend/app/api/chat/route.ts)
 
 import {
@@ -125,4 +91,4 @@ export async function POST(req: Request) {
     sendReasoning: true,
   });
 }
-*/
+
