@@ -33,18 +33,11 @@ export const AI_NAME = "SellerSight";
 export const OWNER_NAME = "Manushi and Ishita (BITSoM MBA Co’26)";
 
 export const WELCOME_MESSAGE = `
-"Hi, I'm SellerSight 👋\n" +
-"Your Amazon review intelligence assistant.\n\n" +
+Hi, I'm SellerSight. Your Amazon review intelligence assistant.
 
-"I help you:\n" +
-"• Spot top customer complaints & delights\n" +
-"• Identify feature gaps and improvement opportunities\n" +
-"• Compare products using review insights\n" +
-"• Get clear, actionable recommendations\n\n" +
+I help you to analyze real customer feedback, uncover hidden performance drivers, and forecast the outcomes of inaction.
 
-"To begin, share:\n" +
-"• ASIN (or competitor ASINs)\n" +
-"• Your goal (launch, optimise, compare)\n\n" +
+To begin share your ASIN (or competitor ASINs) & your goal.
 `;
 
 export const CLEAR_CHAT_TEXT = "New Analysis";
