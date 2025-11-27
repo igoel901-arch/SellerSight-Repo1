@@ -29,18 +29,13 @@ const formSchema = z.object({
 const makeWelcomeMessage = (): UIMessage => ({
   id: `welcome-${Date.now()}`,
   role: "assistant",
-  parts: [
-    {
-      type: "text",
-      text: WELCOME_MESSAGE,
-    },
-  ],
+  parts: [{ type: "text", text: WELCOME_MESSAGE }],
 });
 
 export default function Chat() {
   const [isClient, setIsClient] = useState(false);
   const [durations, setDurations] = useState<Record<string, number>>({});
-  const welcomeMessageShownRef = useRef<boolean>(false);
+  const welcomeMessageShownRef = useRef(false);
 
   const { messages, sendMessage, status, stop, setMessages } = useChat();
 
@@ -57,10 +52,7 @@ export default function Chat() {
   }, [isClient, setMessages]);
 
   const handleDurationChange = (key: string, duration: number) => {
-    setDurations((prev) => ({
-      ...prev,
-      [key]: duration,
-    }));
+    setDurations((prev) => ({ ...prev, [key]: duration }));
   };
 
   const form = useForm<z.infer<typeof formSchema>>({
@@ -80,11 +72,11 @@ export default function Chat() {
   }
 
   return (
-    // FULL-PAGE LAYOUT (no inner window)
+    // FULL PAGE – no card, no rounded corners
     <div className="flex min-h-screen flex-col bg-[#FAF7F2] text-[#0F1111] font-sans">
-      {/* Top gradient header across full width */}
+      {/* Full-width gradient header */}
       <header className="bg-gradient-to-r from-[#4C6FFF] to-[#8A2EFF] text-white">
-        <div className="max-w-5xl mx-auto w-full px-6 py-4 flex items-center justify-between gap-2">
+        <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-2 px-6 py-4">
           <div className="flex items-center gap-2">
             <Avatar className="h-8 w-8 border border-white/40">
               <AvatarImage src="/sellersight-logo.png" />
@@ -111,12 +103,12 @@ export default function Chat() {
         </div>
       </header>
 
-      {/* Middle area (quick-start + messages) fills remaining height */}
+      {/* Main content area fills remaining height */}
       <div className="flex-1 flex flex-col bg-white">
-        {/* Quick-start row */}
+        {/* Quick-start section */}
         <section className="border-b border-gray-200">
-          <div className="max-w-5xl mx-auto w-full px-6 pt-4 pb-2 text-xs text-[#374151]">
-            <p className="font-medium text-[11px] uppercase tracking-wide text-[#6B7280] mb-2">
+          <div className="mx-auto w-full max-w-6xl px-6 pt-4 pb-2 text-xs text-[#374151]">
+            <p className="mb-2 text-[11px] font-medium uppercase tracking-wide text-[#6B7280]">
               Want help getting started?
             </p>
             <div className="flex flex-col gap-2 md:flex-row md:flex-wrap">
@@ -139,9 +131,9 @@ export default function Chat() {
           </div>
         </section>
 
-        {/* Messages area (scrollable) */}
+        {/* Messages – scroll in the middle */}
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-5xl mx-auto w-full px-6 py-4">
+          <div className="mx-auto w-full max-w-6xl px-6 py-4">
             {isClient ? (
               <>
                 <MessageWall
@@ -151,22 +143,22 @@ export default function Chat() {
                   onDurationChange={handleDurationChange}
                 />
                 {status === "submitted" && (
-                  <div className="flex justify-start max-w-3xl w-full mt-2">
+                  <div className="mt-2 flex w-full max-w-3xl justify-start">
                     <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
                   </div>
                 )}
               </>
             ) : (
-              <div className="flex justify-center w-full py-6">
+              <div className="flex w-full justify-center py-6">
                 <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
               </div>
             )}
           </div>
         </main>
 
-        {/* INPUT BAR STUCK AT BOTTOM */}
+        {/* Input bar STUCK to bottom of page */}
         <section className="border-t border-gray-200 bg-white">
-          <div className="max-w-5xl mx-auto w-full px-6 py-3">
+          <div className="mx-auto w-full max-w-6xl px-6 py-3">
             <form
               onSubmit={form.handleSubmit(onSubmit)}
               id="chat-form"
@@ -183,7 +175,7 @@ export default function Chat() {
                         <Input
                           {...field}
                           placeholder="Ask a question about your ASIN, reviews, or competitors…"
-                          className="h-12 w-full rounded-full border border-gray-300 bg-white text-sm text-[#0F1111] pl-4 pr-12 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4C6FFF]"
+                          className="h-12 w-full rounded-full border border-gray-300 bg-white pl-4 pr-12 text-sm text-[#0F1111] shadow-sm focus:outline-none focus:ring-2 focus:ring-[#4C6FFF]"
                           disabled={status === "streaming"}
                           autoComplete="off"
                           onKeyDown={(e) => {
@@ -198,7 +190,7 @@ export default function Chat() {
                             type="submit"
                             disabled={!field.value.trim()}
                             size="icon"
-                            className="absolute right-1 h-9 w-9 rounded-full bg-[#232F3E] hover:bg-[#111827] text-white shadow"
+                            className="absolute right-1 h-9 w-9 rounded-full bg-[#232F3E] text-white shadow hover:bg-[#111827]"
                           >
                             <ArrowUp className="h-4 w-4" />
                           </Button>
@@ -222,9 +214,9 @@ export default function Chat() {
           </div>
         </section>
 
-        {/* Footer across bottom */}
+        {/* Footer across full width */}
         <footer className="border-t border-gray-100 bg-white">
-          <div className="max-w-5xl mx-auto w-full px-6 py-3 text-[11px] text-gray-500 flex justify-between items-center">
+          <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-3 text-[11px] text-gray-500">
             <span>© {new Date().getFullYear()} {OWNER_NAME}</span>
             <span className="space-x-1">
               <Link href="/terms" className="underline">
