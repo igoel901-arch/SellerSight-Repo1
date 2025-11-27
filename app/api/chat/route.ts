@@ -1,3 +1,34 @@
+import { NextRequest, NextResponse } from "next/server";
+import { streamText } from "ai";
+import { openai } from "@ai-sdk/openai";
+// … your RAG imports …
+
+const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+if (!OPENAI_API_KEY) {
+  throw new Error("Missing OPENAI_API_KEY in environment variables");
+}
+
+export async function POST(req: NextRequest) {
+  const { messages } = await req.json();
+
+  const result = await streamText({
+    model: openai("gpt-4.1-mini", {
+      apiKey: OPENAI_API_KEY,
+    }),
+    messages,
+    // providerOptions is optional now – remove if it caused the JSONValue error
+    // providerOptions: {
+    //   openai: {
+    //     apiKey: OPENAI_API_KEY,
+    //   },
+    // },
+    // include your RAG / tools logic here
+  });
+
+  return result.toDataStreamResponse();
+}
+/**
 // app/api/chat/route.ts  (or frontend/app/api/chat/route.ts)
 
 import {
@@ -91,3 +122,4 @@ export async function POST(req: Request) {
     sendReasoning: true,
   });
 }
+*/
